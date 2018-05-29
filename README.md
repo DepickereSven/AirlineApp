@@ -5,7 +5,7 @@ MVC app for USA airlines
 
 ![Database layout](https://i.imgur.com/sYhJyyV.png)
 
-[Zie](Airline-script.sql)
+[Zie script](Airline-script.sql)
 
 Het bestaat uit 3 tabbelen:
   * airlinecodes
