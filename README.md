@@ -24,3 +24,7 @@ Het bestaat uit 3 tabbelen:
       * airlineCode
       * opgericht
       * gestopt
+
+### Scaffold command
+
+`Scaffold-DbContext "Data Source=[DESKTOP_NAME]\SQLEXPRESS;Initial Catalog=Airlines;Integrated Security=True;"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Context AirlinesContext -f`
