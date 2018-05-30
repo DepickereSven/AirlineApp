@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
+using AirlineApp.Models;
 
 namespace AirlineApp.Controllers
 {
@@ -26,21 +27,17 @@ namespace AirlineApp.Controllers
         }
 
         // GET: Airlinecodes/Details/5
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Details(string id)
         {
-            if (id == null)
+            if(id != null)
             {
-                return NotFound();
+                return View(
+                    db.Airlinecodes
+                               .Include(m => m.Locatie)
+                               .Include(m => m.Opgericht)
+                .FirstOrDefault(m => m.Code == id));
             }
-
-            var airlinecodes = await db.Airlinecodes
-                .SingleOrDefaultAsync(m => m.Code == id);
-            if (airlinecodes == null)
-            {
-                return NotFound();
-            }
-
-            return View(airlinecodes);
+            return View("Error", new ErrorViewModel());
         }
 
         // GET: Airlinecodes/Create
