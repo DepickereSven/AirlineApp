@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AirlineApp.Entities.Locatie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Locations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Sort" asp-route-field="code">Airline code</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-route-field="@Html.DisplayNameFor(model => model.StadHoofkwartier)">@Html.DisplayNameFor(model => model.StadHoofkwartier)</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-route-field="@Html.DisplayNameFor(model => model.StaatHoofkwartier)">@Html.DisplayNameFor(model => model.StaatHoofkwartier)</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-route-field="@Html.DisplayNameFor(model => model.MainHub)">@Html.DisplayNameFor(model => model.MainHub)</a>
+            </th>
+            <th>
+                <a asp-action="Sort" asp-route-field="@Html.DisplayNameFor(model => model.StaatMainHub)">@Html.DisplayNameFor(model => model.StaatMainHub)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirlineCodeNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StadHoofkwartier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaatHoofkwartier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MainHub)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaatMainHub)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AirlineCode"><i class="fas fa-edit"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

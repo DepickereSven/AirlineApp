@@ -1,0 +1,49 @@
+﻿@model AirlineApp.Entities.Locatie
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Locatie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AirlineCode" />
+            <div class="form-group">
+                <label asp-for="StadHoofkwartier" class="control-label"></label>
+                <input asp-for="StadHoofkwartier" class="form-control" />
+                <span asp-validation-for="StadHoofkwartier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StaatHoofkwartier" class="control-label"></label>
+                <input asp-for="StaatHoofkwartier" class="form-control" />
+                <span asp-validation-for="StaatHoofkwartier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MainHub" class="control-label"></label>
+                <input asp-for="MainHub" class="form-control" />
+                <span asp-validation-for="MainHub" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StaatMainHub" class="control-label"></label>
+                <input asp-for="StaatMainHub" class="form-control" />
+                <span asp-validation-for="StaatMainHub" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
