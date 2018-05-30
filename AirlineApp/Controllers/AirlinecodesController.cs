@@ -39,25 +39,5 @@ namespace AirlineApp.Controllers
             }
             return View("Error", new ErrorViewModel());
         }
-
-        // GET: Airlinecodes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Airlinecodes/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Code")] Airlinecodes airlinecodes)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Add(airlinecodes);
-                await db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(airlinecodes);
-        }
     }
 }
