@@ -20,9 +20,9 @@ namespace AirlineApp.Controllers
 
         [Route("")]
         // GET: Airlinecodes
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await db.Airlinecodes.ToListAsync());
+            return View(db.Airlinecodes.ToList());
         }
 
         // GET: Airlinecodes/Details/5
