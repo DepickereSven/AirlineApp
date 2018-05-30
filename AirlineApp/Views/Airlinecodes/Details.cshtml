@@ -4,21 +4,39 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<div style="margin-top:15%" class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Html.DisplayFor(model => model.Name) (@Html.DisplayFor(model => model.Code))</h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">History</h3>
+            </div>
+            <div class="panel-body">
+                <p>@Html.DisplayFor(model => model.Name) is created in the year @Html.DisplayFor(model => model.Opgericht.Opgericht1).</p>
+                @if (Model.Opgericht.Gestopt != "")
+                {
+                    <p>But the company ceased the operations in @Html.DisplayFor(model => model.Opgericht.Gestopt).</p>
+
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Address</h3>
+            </div>
+            <div class="panel-body">
+                <p>The headquarters are located in  @Html.DisplayFor(model => model.Locatie.StaatHoofkwartier) in the city @Html.DisplayFor(model => model.Locatie.StadHoofkwartier).</p>
+                <p>The main hub of @Html.DisplayFor(model => model.Name) is located at the airfield with code @Html.DisplayFor(model => model.Locatie.MainHub) in the state @Html.DisplayFor(model => model.Locatie.StaatMainHub).</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div>
-    <h4>Airlinecodes</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Code">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.Code">Edit</a> 
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>
