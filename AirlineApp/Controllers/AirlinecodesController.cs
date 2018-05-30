@@ -11,18 +11,18 @@ namespace AirlineApp.Controllers
 {
     public class AirlinecodesController : Controller
     {
-        private readonly AirlinesContext _context;
+        private readonly AirlinesContext db;
 
         public AirlinecodesController(AirlinesContext context)
         {
-            _context = context;
+            db = context;
         }
 
         [Route("")]
         // GET: Airlinecodes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Airlinecodes.ToListAsync());
+            return View(await db.Airlinecodes.ToListAsync());
         }
 
         // GET: Airlinecodes/Details/5
@@ -33,7 +33,7 @@ namespace AirlineApp.Controllers
                 return NotFound();
             }
 
-            var airlinecodes = await _context.Airlinecodes
+            var airlinecodes = await db.Airlinecodes
                 .SingleOrDefaultAsync(m => m.Code == id);
             if (airlinecodes == null)
             {
@@ -50,16 +50,14 @@ namespace AirlineApp.Controllers
         }
 
         // POST: Airlinecodes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Code")] Airlinecodes airlinecodes)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(airlinecodes);
-                await _context.SaveChangesAsync();
+                db.Add(airlinecodes);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(airlinecodes);
@@ -73,7 +71,7 @@ namespace AirlineApp.Controllers
                 return NotFound();
             }
 
-            var airlinecodes = await _context.Airlinecodes.SingleOrDefaultAsync(m => m.Code == id);
+            var airlinecodes = await db.Airlinecodes.SingleOrDefaultAsync(m => m.Code == id);
             if (airlinecodes == null)
             {
                 return NotFound();
@@ -82,8 +80,6 @@ namespace AirlineApp.Controllers
         }
 
         // POST: Airlinecodes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Name,Code")] Airlinecodes airlinecodes)
@@ -97,8 +93,8 @@ namespace AirlineApp.Controllers
             {
                 try
                 {
-                    _context.Update(airlinecodes);
-                    await _context.SaveChangesAsync();
+                    db.Update(airlinecodes);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +120,7 @@ namespace AirlineApp.Controllers
                 return NotFound();
             }
 
-            var airlinecodes = await _context.Airlinecodes
+            var airlinecodes = await db.Airlinecodes
                 .SingleOrDefaultAsync(m => m.Code == id);
             if (airlinecodes == null)
             {
@@ -139,15 +135,15 @@ namespace AirlineApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var airlinecodes = await _context.Airlinecodes.SingleOrDefaultAsync(m => m.Code == id);
-            _context.Airlinecodes.Remove(airlinecodes);
-            await _context.SaveChangesAsync();
+            var airlinecodes = await db.Airlinecodes.SingleOrDefaultAsync(m => m.Code == id);
+            db.Airlinecodes.Remove(airlinecodes);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AirlinecodesExists(string id)
         {
-            return _context.Airlinecodes.Any(e => e.Code == id);
+            return db.Airlinecodes.Any(e => e.Code == id);
         }
     }
 }
