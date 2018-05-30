@@ -18,7 +18,7 @@ namespace AirlineApp.Controllers
             _context = context;
         }
 
-        [Route("")]
+        
         // GET: Airlinecodes
         public async Task<IActionResult> Index()
         {
