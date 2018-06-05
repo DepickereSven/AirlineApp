@@ -3,9 +3,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>API</h2>
 
-<h2>/api/{AirlineCode}</h2>
+<h3>api/code/{AirlineCode}</h3>
 
 <p>Airline code can be</p>
 <ul>
@@ -28,13 +27,24 @@
     <li>YV</li>
 </ul>
 
-<h3>/api/{YYYY-MM-DD}</h3>
+<p>Example:</p>
+<p>api/code/DL</p>
+<a href="/api/code/DL" class="btn btn-info">Give it a try</a>
 
-<p>Range of date is 2011-01-01 - 20111-01-03</p>
+<h3 style="margin-top:10%">api/date/{YYYY-MM-DD}</h3>
 
-<h3>/api/{StateName}</h3>
+<p>Range of date is 2011-01-01 - 2011-01-03 currently only data available of AS.</p>
+<p>If you enter all as {YYYY-MM-DD} it will give all the dates back.</p>
 
-<p>StateName can be:</p>
+<p>Example:</p>
+<p>/api/date/2011-01-02</p>
+<a href="/api/date/2011-01-02" class="btn btn-info">Give it a try</a>
+
+<h3 style="margin-top:10%">api/DS/{DepartureStateName}</h3>
+<h3>Or</h3>
+<h3>api/AS/{ArrivalStateName}</h3>
+
+<p>Departure State Name or Arrival State Name can be: (currently only data available of AS)</p>
 <ul>
     <li>AL</li>
     <li>MT</li>
@@ -87,3 +97,12 @@
     <li>MO</li>
     <li>WY</li>
 </ul>
+
+
+<p>Example:</p>
+<p>api/DS/AL</p>
+<a href="/api/DS/AL" class="btn btn-info">Give it a try</a>
+
+<p>Example:</p>
+<p>api/AS/AL</p>
+<a href="/api/AS/AL" class="btn btn-info">Give it a try</a>
