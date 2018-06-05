@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AirlineApp.Models
 {
-    public class Airline
+    public class Airliner
     {
         public Airlines[] Airline { get; set; }
         public class Airlines

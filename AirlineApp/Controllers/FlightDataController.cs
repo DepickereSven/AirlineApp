@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AirlineApp.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static AirlineApp.Models.Airline;
+using static AirlineApp.Models.Airliner;
 
 namespace AirlineApp.Controllers
 {
@@ -39,6 +39,8 @@ namespace AirlineApp.Controllers
                 return Ok(newItem);
             }
         }
+
+        [HttpGet("")]
         
         
     }
