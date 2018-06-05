@@ -3,7 +3,7 @@ MVC app for USA airlines
 
 ## Database 
 
-![Database layout](https://i.imgur.com/sYhJyyV.png)
+![Database layout](https://i.imgur.com/6iWM5LB.jpg)
 
 [Zie script](Airline-script.sql)
 
@@ -24,6 +24,18 @@ Het bestaat uit 3 tabbelen:
       * airlineCode
       * opgericht
       * gestopt
+  * FlightData
+    * Kolomen:
+      * Airline_Code
+      * Date
+      * Depature_Airport
+      * Arrival_Airport
+      * Departure_State
+      * Arrival_State
+      * Departure_Latitude
+      * Arrival_Latitude
+      * Departure_Longitude
+      * Arrival_Longitude
 
 ### Scaffold command
 
