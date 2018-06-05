@@ -9,6 +9,7 @@ using AirlineApp.Entities;
 
 namespace AirlineApp.Controllers
 {
+    [Route("History")]
     public class HistoryController : Controller
     {
         private readonly AirlinesContext _context;
@@ -18,14 +19,14 @@ namespace AirlineApp.Controllers
             _context = context;
         }
 
-        // GET: History
+        [Route("Index")]
         public IActionResult Index()
         {
             var airlinesContext = _context.Opgericht.Include(o => o.AirlineCodeNavigation);
             return View(airlinesContext.ToList());
         }
-       
-        // GET: History/Edit/5
+
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -42,7 +43,7 @@ namespace AirlineApp.Controllers
             return View(opgericht);
         }
 
-        // POST: History/Edit/5
+        [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("AirlineCode,Opgericht1,Gestopt")] Opgericht opgericht)

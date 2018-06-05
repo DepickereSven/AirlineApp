@@ -9,6 +9,7 @@ using AirlineApp.Entities;
 
 namespace AirlineApp.Controllers
 {
+    [Route("Locaties")]
     public class LocatiesController : Controller
     {
         private readonly AirlinesContext db;
@@ -18,14 +19,14 @@ namespace AirlineApp.Controllers
             db = context;
         }
 
-        // GET: Locaties
+        [Route("Index")]
         public IActionResult Index()
         {
             var airlinesContext = db.Locatie.Include(l => l.AirlineCodeNavigation);
             return View(airlinesContext.ToList());
         }
 
-        // GET: Locaties/Edit/5
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -42,7 +43,7 @@ namespace AirlineApp.Controllers
             return View(locatie);
         }
 
-        // POST: Locaties/Edit/5
+        [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("AirlineCode,StadHoofkwartier,StaatHoofkwartier,MainHub,StaatMainHub")] Locatie locatie)

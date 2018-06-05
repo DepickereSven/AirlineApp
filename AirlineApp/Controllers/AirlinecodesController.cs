@@ -20,13 +20,12 @@ namespace AirlineApp.Controllers
         }
 
         [Route("")]
-        // GET: Airlinecodes
         public IActionResult Index()
         {
             return View(db.Airlinecodes.ToList());
         }
 
-        // GET: Airlinecodes/Details/5
+        [Route("Details/{id}")]
         public IActionResult Details(string id)
         {
             if(id != null)

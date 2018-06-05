@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineApp.Controllers
 {
+    [Route("ListAPI")]
     public class ListAPIController : Controller
     {
-        // GET: ListAPI
+        [Route("Index")]
         public ActionResult Index()
         {
             return View();
