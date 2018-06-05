@@ -7,6 +7,7 @@ namespace AirlineApp.Entities
     public partial class AirlinesContext : DbContext
     {
         public virtual DbSet<Airlinecodes> Airlinecodes { get; set; }
+        public virtual DbSet<FlightData> FlightData { get; set; }
         public virtual DbSet<Locatie> Locatie { get; set; }
         public virtual DbSet<Opgericht> Opgericht { get; set; }
 
@@ -43,6 +44,59 @@ namespace AirlineApp.Entities
                     .HasColumnName("name")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<FlightData>(entity =>
+            {
+                entity.HasKey(e => e.FlightId);
+
+                entity.Property(e => e.FlightId).HasColumnName("FlightID");
+
+                entity.Property(e => e.AirlineCode)
+                    .IsRequired()
+                    .HasColumnName("Airline_code")
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ArrivalAirport)
+                    .IsRequired()
+                    .HasColumnName("Arrival_Airport")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ArrivalLatitude).HasColumnName("Arrival_Latitude");
+
+                entity.Property(e => e.ArrivalLongitude).HasColumnName("Arrival_Longitude");
+
+                entity.Property(e => e.ArrivalState)
+                    .IsRequired()
+                    .HasColumnName("Arrival_State")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Date).HasColumnType("date");
+
+                entity.Property(e => e.DepartureLatitude).HasColumnName("Departure_Latitude");
+
+                entity.Property(e => e.DepatureAirport)
+                    .IsRequired()
+                    .HasColumnName("Depature_Airport")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DepatureLongitude).HasColumnName("Depature_Longitude");
+
+                entity.Property(e => e.DepatureState)
+                    .IsRequired()
+                    .HasColumnName("Depature_State")
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.AirlineCodeNavigation)
+                    .WithMany(p => p.FlightData)
+                    .HasForeignKey(d => d.AirlineCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FlightData_airlinecodes");
             });
 
             modelBuilder.Entity<Locatie>(entity =>
