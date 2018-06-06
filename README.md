@@ -90,7 +90,7 @@ This will return something in this format:
 ```javascript
 [
    {
-        "date": "2011-01-01T00:00:00",
+        "date": "2011/01/01",
         "airlineCode": "AS",
         "departure": {
             "airport": "ABQ",
@@ -108,7 +108,7 @@ This will return something in this format:
 ]
 ```
 
-### api/DS/{DepartureStateName} or api/AS/{ArrivalStateName}
+### api/state/DS/{DepartureStateName} or api/state/AS/{ArrivalStateName}
 
 Possible states are:
 
@@ -125,3 +125,24 @@ State | State | State | State | State
  FL | ME | NH | RI | WI |
  GA | MD | NJ | SC | WY |
  
+This will return something in this format: 
+```javascript
+[
+   {
+        "date": "2011/01/01",
+        "airlineCode": "AS",
+        "departure": {
+            "airport": "BNA",
+            "state": "TN",
+            "latitude": 36.12,
+            "longitude": -86.67
+        },
+        "arrival": {
+            "airport": "BWI",
+            "state": "MD",
+            "latitude": 39.17,
+            "longitude": -76.66
+        }
+    }
+]
+```
