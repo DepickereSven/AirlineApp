@@ -11,8 +11,8 @@ namespace AirlineApp.Models
         public class Airlines
         {
 
-            public string Name { get; set; }
-            public string Code { get; set; }
+            public string AirlineName { get; set; }
+            public string AirlineCode { get; set; }
         }
     }
 }
