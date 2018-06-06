@@ -79,6 +79,56 @@ This will return something in this format:
 ]
 ```
 
+### api/info/{AirlineCode}
+
+Airline code can be:
+ *  AA
+ *  AS
+ *  B6
+ *  CO
+ *  DL
+ *  EV
+ *  F9
+ *  FL
+ *  HA
+ *  MQ
+ *  OO
+ *  UA
+ *  US
+ *  VX
+ *  WN
+ *  XE
+ *  YV
+ 
+ This will return something in this format:
+
+```javascript
+[
+    {
+        "airlineCode": "DL",
+        "airlineName": "Delta Air Lines",
+        "location": [
+            {
+                "hoofdkwartier": {
+                    "city": "Atlanta",
+                    "state": "Georgia"
+                },
+                "hub": {
+                    "airport": "ATL",
+                    "state": "Georgia"
+                }
+            }
+        ],
+        "history": [
+            {
+                "foundedInTheYear": "1924",
+                "ceasedOperations": ""
+            }
+        ]
+    }
+]
+```
+
 ### api/date/{YYYY-MM-DD}
 
 Range of date is between 2011-01-01 and 2011-01-03. 
