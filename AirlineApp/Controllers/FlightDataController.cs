@@ -29,8 +29,8 @@ namespace AirlineApp.Controllers
                 var item = db.Airlinecodes
                     .Select(x => new
                     {
-                        Code = x.Code,
-                        Name = x.Name
+                        AirlineCode = x.Code,
+                        AirlineName = x.Name
                     })
                     .ToArray();
                 return Ok(item);
@@ -41,8 +41,8 @@ namespace AirlineApp.Controllers
                     .Find(id);
                 var newItem = (new Airlines
                 {
-                    Code = item.Code,
-                    Name = item.Name
+                    AirlineCode = item.Code,
+                    AirlineName = item.Name
                 });
                 if (item == null)
                 {
@@ -152,6 +152,46 @@ namespace AirlineApp.Controllers
                     return Ok($"You entered {depatureOrArrival} that isn't equal to DS or AS");
                 }
             }
+        }
+
+        [HttpGet("info/{airlineCode}")]
+        public IActionResult GEtInfo(string airlineCode)
+        {
+            var item = db.Airlinecodes
+                .Where(x => x.Code == airlineCode)
+                .Select(x => new
+                {
+                    AirlineCode = x.Code,
+                    AirlineName = x.Name,
+                    Location = db.Locatie
+                    .Where(i => i.AirlineCode == airlineCode)
+                    .Select( i => new
+                    {
+                        Hoofdkwartier = new
+                        {
+                            City = i.StadHoofkwartier,
+                            State = i.StaatHoofkwartier
+                        },
+                        Hub = new
+                        {
+                            Airport = i.MainHub,
+                            State = i.StaatMainHub
+                        }
+                    }), 
+                    History = db.Opgericht
+                    .Where(p => p.AirlineCode == airlineCode)
+                    .Select( p => new
+                    {
+                        FoundedInTheYear = p.Opgericht1,
+                        CeasedOperations = p.Gestopt
+                    }),
+
+                });
+            if (item == null)
+            {
+                return Ok($"Airline with like {airlineCode} don't exist");
+            }
+            return Ok(item);
         }
     }
 }
