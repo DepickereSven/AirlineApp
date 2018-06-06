@@ -43,7 +43,9 @@ Het bestaat uit 3 tabbelen:
 `Scaffold-DbContext "Data Source=[DESKTOP_NAME]\SQLEXPRESS;Initial Catalog=Airlines;Integrated Security=True;"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Context AirlinesContext -f`
 
 
-## API
+# API
+
+## GET Requests
 
 ### api/code/{AirlineCode}
 
@@ -122,7 +124,7 @@ Airline code can be:
         "history": [
             {
                 "foundedInTheYear": "1924",
-                "ceasedOperations": ""
+                "CeasedOperationsInTheYear": ""
             }
         ]
     }
