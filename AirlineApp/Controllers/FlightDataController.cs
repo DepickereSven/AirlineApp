@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AirlineApp.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static AirlineApp.Models.Airliner;
 
 namespace AirlineApp.Controllers
 {
@@ -38,7 +39,7 @@ namespace AirlineApp.Controllers
             {
                 var item = db.Airlinecodes
                     .Find(id);
-                var newItem = (new
+                var newItem = (new Airlines
                 {
                     Code = item.Code,
                     Name = item.Name
@@ -75,7 +76,7 @@ namespace AirlineApp.Controllers
                         Longitude = x.ArrivalLongitude
                     }
                 });
-            if (item == null)
+            if (item.Count() == 0)
             {
                 return Ok($"The date you give enterd: {dateStamp} isn't between: 2011-01-01 - 2011-01-03");
             }
