@@ -165,7 +165,7 @@ namespace AirlineApp.Controllers
                     AirlineName = x.Name,
                     Location = db.Locatie
                     .Where(i => i.AirlineCode == airlineCode)
-                    .Select( i => new
+                    .Select(i => new
                     {
                         Hoofdkwartier = new
                         {
@@ -180,10 +180,10 @@ namespace AirlineApp.Controllers
                     }), 
                     History = db.Opgericht
                     .Where(p => p.AirlineCode == airlineCode)
-                    .Select( p => new
+                    .Select(p => new
                     {
                         FoundedInTheYear = p.Opgericht1,
-                        CeasedOperations = p.Gestopt
+                        CeasedOperationsInTheYear = p.Gestopt
                     }),
 
                 });
