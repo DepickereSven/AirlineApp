@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AirlineApp.Entities;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AirlineApp.Data;
+using AirlineApp.Models;
+using AirlineApp.Services;
+using AirlineApp.Entities;
 
 namespace AirlineApp
 {
@@ -23,8 +27,17 @@ namespace AirlineApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddMvc();
-            services.AddDbContext<AirlinesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +47,7 @@ namespace AirlineApp
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -42,14 +56,15 @@ namespace AirlineApp
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             app.UseMvc(
-            //routes =>
+            //    routes =>
             //{
             //    routes.MapRoute(
             //        name: "default",
             //        template: "{controller=Home}/{action=Index}/{id?}");
-            //}
-        );
-        }
+            );
+    }
     }
 }

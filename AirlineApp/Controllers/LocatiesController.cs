@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
+using AirlineApp.Data;
 
 namespace AirlineApp.Controllers
 {
     [Route("Locaties")]
     public class LocatiesController : Controller
     {
-        private readonly AirlinesContext db;
+        private readonly ApplicationDbContext db;
 
-        public LocatiesController(AirlinesContext context)
+        public LocatiesController(ApplicationDbContext context)
         {
             db = context;
         }

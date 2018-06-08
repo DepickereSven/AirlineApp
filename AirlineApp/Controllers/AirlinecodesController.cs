@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
 using AirlineApp.Models;
+using AirlineApp.Data;
 
 namespace AirlineApp.Controllers
 {
     public class AirlinecodesController : Controller
     {
-        private readonly AirlinesContext db;
+        private readonly ApplicationDbContext db;
 
-        public AirlinecodesController(AirlinesContext context)
+        public AirlinecodesController(ApplicationDbContext context)
         {
             db = context;
         }

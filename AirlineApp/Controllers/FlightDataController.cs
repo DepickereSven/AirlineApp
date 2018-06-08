@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using AirlineApp.Data;
 using AirlineApp.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace AirlineApp.Controllers
     [Route("api")]
     public class FlightDataController : Controller
     {
-        private readonly AirlinesContext db;
+        private readonly ApplicationDbContext db;
 
-        public FlightDataController(AirlinesContext context)
+        public FlightDataController(ApplicationDbContext context)
         {
             db = context;
         }

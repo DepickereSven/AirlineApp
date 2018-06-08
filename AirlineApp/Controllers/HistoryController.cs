@@ -6,23 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
+using AirlineApp.Data;
 
 namespace AirlineApp.Controllers
 {
     [Route("History")]
     public class HistoryController : Controller
     {
-        private readonly AirlinesContext _context;
+        private readonly ApplicationDbContext db;
 
-        public HistoryController(AirlinesContext context)
+        public HistoryController(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         [Route("Index")]
         public IActionResult Index()
         {
-            var airlinesContext = _context.Opgericht.Include(o => o.AirlineCodeNavigation);
+            var airlinesContext = db.Opgericht.Include(o => o.AirlineCodeNavigation);
             return View(airlinesContext.ToList());
         }
 
@@ -34,12 +35,12 @@ namespace AirlineApp.Controllers
                 return NotFound();
             }
 
-            var opgericht = await _context.Opgericht.SingleOrDefaultAsync(m => m.AirlineCode == id);
+            var opgericht = await db.Opgericht.SingleOrDefaultAsync(m => m.AirlineCode == id);
             if (opgericht == null)
             {
                 return NotFound();
             }
-            ViewData["AirlineCode"] = new SelectList(_context.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
+            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
             return View(opgericht);
         }
 
@@ -57,8 +58,8 @@ namespace AirlineApp.Controllers
             {
                 try
                 {
-                    _context.Update(opgericht);
-                    await _context.SaveChangesAsync();
+                    db.Update(opgericht);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -73,13 +74,13 @@ namespace AirlineApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AirlineCode"] = new SelectList(_context.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
+            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
             return View(opgericht);
         }
 
         private bool OpgerichtExists(string id)
         {
-            return _context.Opgericht.Any(e => e.AirlineCode == id);
+            return db.Opgericht.Any(e => e.AirlineCode == id);
         }
     }
 }
