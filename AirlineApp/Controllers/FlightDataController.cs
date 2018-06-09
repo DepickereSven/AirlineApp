@@ -178,7 +178,7 @@ namespace AirlineApp.Controllers
                             Airport = i.MainHub,
                             State = i.StaatMainHub
                         }
-                    }), 
+                    }),
                     History = db.Opgericht
                     .Where(p => p.AirlineCode == airlineCode)
                     .Select(p => new

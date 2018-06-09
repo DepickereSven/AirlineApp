@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
 using AirlineApp.Data;
 using AirlineApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AirlineApp.Controllers
 {
@@ -29,6 +30,7 @@ namespace AirlineApp.Controllers
         }
 
         [Route("Edit/{id}")]
+        [Authorize]
         public IActionResult Edit(string id)
         {
             if (id == null)
@@ -49,6 +51,7 @@ namespace AirlineApp.Controllers
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(Locatie locatie)
         {
             if (ModelState.IsValid)
