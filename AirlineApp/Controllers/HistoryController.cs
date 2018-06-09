@@ -44,8 +44,6 @@ namespace AirlineApp.Controllers
                 }
                 return View(opgericht);
             }
-
-
         }
 
         [Route("Edit/{id}")]
@@ -60,6 +58,35 @@ namespace AirlineApp.Controllers
                 return RedirectToAction("Index");
             }
             return View(opgericht);
+        }
+
+        [Route("Sort/{object?}")]
+        public IActionResult Sort(string field)
+        {
+            List<Opgericht> historieData;
+            switch (field)
+            {
+                default:
+                case "code":
+                    historieData = db.Opgericht
+                        .OrderBy(m => m.AirlineCode)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "Opgericht":
+                    historieData = db.Opgericht
+                        .OrderBy(m => m.Opgericht1)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "Gestopt":
+                    historieData = db.Opgericht
+                        .OrderBy(m => m.Gestopt)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+            }
+            return View("Index", historieData);
         }
     }
 }
