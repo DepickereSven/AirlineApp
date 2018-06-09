@@ -88,5 +88,24 @@ namespace AirlineApp.Controllers
             }
             return View("Index", historieData);
         }
+
+
+        [Route("Find/{keyword?}")]
+        public ViewResult Find(string keyword)
+        {
+            return View("Index", db.Opgericht
+                  .Where(m => 
+                  m.AirlineCode.Contains(keyword ?? "")
+                  || 
+                  m.Opgericht1.Contains(keyword ?? "")
+                  ||
+                  m.Gestopt.Contains(keyword ?? "")
+                  )
+                  .Select(m => m)
+                  .Include(l => l.AirlineCodeNavigation)
+                  .ToList());
+                  
+        }
+
     }
 }
