@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
 using AirlineApp.Data;
+using AirlineApp.Models;
 
 namespace AirlineApp.Controllers
 {
@@ -28,59 +29,37 @@ namespace AirlineApp.Controllers
         }
 
         [Route("Edit/{id}")]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new ErrorViewModel());
+            }
+            else
+            {
+                Opgericht opgericht = db.Opgericht.SingleOrDefault(m => m.AirlineCode == id);
+                if (opgericht == null)
+                {
+                    return View("Error", new ErrorViewModel());
+                }
+                return View(opgericht);
             }
 
-            var opgericht = await db.Opgericht.SingleOrDefaultAsync(m => m.AirlineCode == id);
-            if (opgericht == null)
-            {
-                return NotFound();
-            }
-            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
-            return View(opgericht);
+
         }
 
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AirlineCode,Opgericht1,Gestopt")] Opgericht opgericht)
+        public IActionResult Edit(Opgericht opgericht)
         {
-            if (id != opgericht.AirlineCode)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    db.Update(opgericht);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OpgerichtExists(opgericht.AirlineCode))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                db.Opgericht.Update(opgericht);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", opgericht.AirlineCode);
             return View(opgericht);
-        }
-
-        private bool OpgerichtExists(string id)
-        {
-            return db.Opgericht.Any(e => e.AirlineCode == id);
         }
     }
 }
