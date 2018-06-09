@@ -103,5 +103,26 @@ namespace AirlineApp.Controllers
             }
             return View("Index", locaties);
         }
+
+        [Route("Find/{keyword?}")]
+        public IActionResult Find(string keyword)
+        {
+            return View("Index",
+                  db.Locatie
+                  .Where(m => 
+                  m.AirlineCode.Contains(keyword ?? "")
+                  ||
+                  m.StadHoofkwartier.Contains(keyword ?? "")
+                  ||
+                  m.StaatHoofkwartier.Contains(keyword ?? "")
+                  ||
+                  m.MainHub.Contains(keyword ?? "")
+                  ||
+                  m.StaatMainHub.Contains(keyword ?? "")
+                  )
+                  .Select(m => m)
+                  .Include(l => l.AirlineCodeNavigation)
+                  .ToList());
+        }
     }
 }
