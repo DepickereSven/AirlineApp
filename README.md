@@ -81,6 +81,28 @@ This will return something in this format:
 ]
 ```
 
+The code to do this for one specified airline is: 
+```c#
+var item = db.Airlinecodes
+                    .Find(id);
+                var newItem = (new Airlines
+                {
+                    AirlineCode = item.Code,
+                    AirlineName = item.Name
+                });
+```
+
+The code to do this for all airlines is: 
+```c#
+var item = db.Airlinecodes
+                    .Select(x => new
+                    {
+                        AirlineCode = x.Code,
+                        AirlineName = x.Name
+                    })
+                    .ToArray();
+```
+
 ### api/info/{AirlineCode}
 
 Airline code can be:
@@ -131,6 +153,40 @@ Airline code can be:
 ]
 ```
 
+The code to do this: 
+```c#
+var item = db.Airlinecodes
+                .Where(x => x.Code == airlineCode)
+                .Select(x => new
+                {
+                    AirlineCode = x.Code,
+                    AirlineName = x.Name,
+                    Location = db.Locatie
+                    .Where(i => i.AirlineCode == airlineCode)
+                    .Select(i => new
+                    {
+                        Hoofdkwartier = new
+                        {
+                            City = i.StadHoofkwartier,
+                            State = i.StaatHoofkwartier
+                        },
+                        Hub = new
+                        {
+                            Airport = i.MainHub,
+                            State = i.StaatMainHub
+                        }
+                    }),
+                    History = db.Opgericht
+                    .Where(p => p.AirlineCode == airlineCode)
+                    .Select(p => new
+                    {
+                        FoundedInTheYear = p.Opgericht1,
+                        CeasedOperationsInTheYear = p.Gestopt
+                    }),
+
+                });
+```
+
 ### api/date/{YYYY-MM-DD}
 
 Range of date is between 2011-01-01 and 2011-01-03. 
@@ -158,6 +214,31 @@ This will return something in this format:
         }
     }
 ]
+```
+
+The code to do this: 
+```c#
+var item = db.FlightData
+                .Where(x => x.Date == DateTime.Parse(dateStamp))
+                .Select(x => new
+                {
+                    date = x.Date.ToString("d", CultureInfo.CreateSpecificCulture("ja-JP")),
+                    AirlineCode = x.AirlineCode,
+                    Departure = new
+                    {
+                        Airport = x.DepatureAirport,
+                        State = x.DepatureState,
+                        Latitude = x.DepartureLatitude,
+                        Longitude = x.DepatureLongitude
+                    },
+                    Arrival = new
+                    {
+                        Airport = x.ArrivalAirport,
+                        State = x.ArrivalState,
+                        Latitude = x.ArrivalLatitude,
+                        Longitude = x.ArrivalLongitude
+                    }
+                });
 ```
 
 ### api/state/DS/{DepartureStateName} or api/state/AS/{ArrivalStateName}
@@ -197,4 +278,55 @@ This will return something in this format:
         }
     }
 ]
+```
+
+The code to do this for DepartureStateName: 
+```c#
+var item = db.FlightData
+                    .Where(x => x.DepatureState == stateName)
+                    .Select(x => new
+                    {
+                        date = x.Date.ToString("d", CultureInfo.CreateSpecificCulture("ja-JP")),
+                        AirlineCode = x.AirlineCode,
+                        Departure = new
+                        {
+                            Airport = x.DepatureAirport,
+                            State = x.DepatureState,
+                            Latitude = x.DepartureLatitude,
+                            Longitude = x.DepatureLongitude
+                        },
+                        Arrival = new
+                        {
+                            Airport = x.ArrivalAirport,
+                            State = x.ArrivalState,
+                            Latitude = x.ArrivalLatitude,
+                            Longitude = x.ArrivalLongitude
+                        }
+                    });
+```
+
+
+The code to do this for ArrivalStateName: 
+```c#
+var item = db.FlightData
+                    .Where(x => x.ArrivalState == stateName)
+                    .Select(x => new
+                    {
+                        date = x.Date.ToString("d", CultureInfo.CreateSpecificCulture("ja-JP")),
+                        AirlineCode = x.AirlineCode,
+                        Departure = new
+                        {
+                            Airport = x.DepatureAirport,
+                            State = x.DepatureState,
+                            Latitude = x.DepartureLatitude,
+                            Longitude = x.DepatureLongitude
+                        },
+                        Arrival = new
+                        {
+                            Airport = x.ArrivalAirport,
+                            State = x.ArrivalState,
+                            Latitude = x.ArrivalLatitude,
+                            Longitude = x.ArrivalLongitude
+                        }
+                    });
 ```
