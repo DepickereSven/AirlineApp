@@ -59,5 +59,49 @@ namespace AirlineApp.Controllers
             }
             return View(locatie);
         }
+
+
+        [Route("Sort/{object?}")]
+        public IActionResult Sort(string field)
+        {
+            List<Locatie> locaties;
+            switch (field)
+            {
+                default:
+                case "code":
+                    locaties = db.Locatie
+                        .OrderBy(m => m.AirlineCode)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "StadHoofkwartier":
+                    locaties = db.Locatie
+                        .OrderBy(m => m.StadHoofkwartier)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "StaatHoofkwartier":
+                    locaties = db.Locatie
+                        .OrderBy(m => m.StaatHoofkwartier)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "MainHub":
+                    locaties = db.Locatie
+                        .OrderBy(m => m.MainHub)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+                case "StaatMainHub":
+                    locaties = db.Locatie
+                        .OrderBy(m => m.StaatMainHub)
+                        .Include(l => l.AirlineCodeNavigation)
+                        .ToList();
+                    break;
+
+
+            }
+            return View("Index", locaties);
+        }
     }
 }
