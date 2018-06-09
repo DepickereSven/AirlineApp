@@ -42,6 +42,13 @@ Het bestaat uit 3 tabbelen:
 
 `Scaffold-DbContext "Data Source=[DESKTOP_NAME]\SQLEXPRESS;Initial Catalog=Airlines;Integrated Security=True;"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Context AirlinesContext -f`
 
+### Authorize
+
+You need to be authorized to use the following links:
+ * /Locaties/Edit
+ * /History/Edit
+ 
+This mean that you need to creat an account. 
 
 # API
 
