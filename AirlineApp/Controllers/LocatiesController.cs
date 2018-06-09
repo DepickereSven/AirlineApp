@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AirlineApp.Entities;
 using AirlineApp.Data;
+using AirlineApp.Models;
 
 namespace AirlineApp.Controllers
 {
@@ -28,59 +29,35 @@ namespace AirlineApp.Controllers
         }
 
         [Route("Edit/{id}")]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error", new ErrorViewModel());
             }
-
-            var locatie = await db.Locatie.SingleOrDefaultAsync(m => m.AirlineCode == id);
-            if (locatie == null)
+            else
             {
-                return NotFound();
+                Locatie locatie = db.Locatie.SingleOrDefault(m => m.AirlineCode == id);
+                if (locatie == null)
+                {
+                    return View("Error", new ErrorViewModel());
+                }
+                return View(locatie);
             }
-            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", locatie.AirlineCode);
-            return View(locatie);
         }
 
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AirlineCode,StadHoofkwartier,StaatHoofkwartier,MainHub,StaatMainHub")] Locatie locatie)
+        public ActionResult Edit(Locatie locatie)
         {
-            if (id != locatie.AirlineCode)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    db.Update(locatie);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LocatieExists(locatie.AirlineCode))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                db.Locatie.Update(locatie);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            ViewData["AirlineCode"] = new SelectList(db.Airlinecodes, "Code", "Code", locatie.AirlineCode);
             return View(locatie);
-        }
-
-        private bool LocatieExists(string id)
-        {
-            return db.Locatie.Any(e => e.AirlineCode == id);
         }
     }
 }
